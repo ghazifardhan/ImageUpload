@@ -17,4 +17,8 @@ public interface ApiService {
     @Multipart
     @POST("/productsmedia")
     Call<ResponseBody> uploadImage(@Part MultipartBody.Part file, @Part("product_id") RequestBody product_id, @Part("title") RequestBody title, @Part("main_position") RequestBody main_position, @Part("status") RequestBody status);
+
+    @Multipart
+    @POST("/upload_image/index.php")
+    Call<ResponseBody> uploadImage2(@Part MultipartBody.Part file, @Part("name") RequestBody name);
 }

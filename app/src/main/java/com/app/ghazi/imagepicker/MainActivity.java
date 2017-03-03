@@ -120,23 +120,17 @@ public class MainActivity extends AppCompatActivity {
 
             RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-            RequestBody product_id = RequestBody.create(MediaType.parse("text/plain"), "63");
-            RequestBody title = RequestBody.create(MediaType.parse("text/plain"), file.getName());
-            RequestBody main_position = RequestBody.create(MediaType.parse("text/plain"), "0");
-            RequestBody status = RequestBody.create(MediaType.parse("text/plain"), "1");
+            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), file.getName());
 
-
-            Call<ResponseBody> call = service.uploadImage(fileToUpload, product_id, title, main_position, status);
+            Call<ResponseBody> call = service.uploadImage2(fileToUpload, name);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    /*
                     try {
                         Toast.makeText(MainActivity.this, response.body().string(), Toast.LENGTH_LONG).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    */
                 }
 
                 @Override
