@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.vlk.multimager.utils.Image;
 
+import net.yazeed44.imagepicker.model.ImageEntry;
+
 import java.util.ArrayList;
 
 /**
@@ -20,10 +22,11 @@ public class RecyclerList extends RecyclerView.Adapter<RecyclerList.ViewHolder> 
 
     Context context;
     ArrayList<Image> imageHolder = new ArrayList<Image>();
+    ArrayList<ImageEntry> imageHolderV2 = new ArrayList<ImageEntry>();
 
-    public RecyclerList(Context context,ArrayList<Image> imageHolder){
+    public RecyclerList(Context context,ArrayList<ImageEntry> imageHolderV2){
         this.context = context;
-        this.imageHolder = imageHolder;
+        this.imageHolderV2 = imageHolderV2;
     }
 
     @Override
@@ -35,12 +38,12 @@ public class RecyclerList extends RecyclerView.Adapter<RecyclerList.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerList.ViewHolder holder, int position) {
-        holder.mImage.setImageBitmap(BitmapFactory.decodeFile(imageHolder.get(position).imagePath));
+        holder.mImage.setImageBitmap(BitmapFactory.decodeFile(imageHolderV2.get(position).path));
     }
 
     @Override
     public int getItemCount() {
-        return imageHolder.size();
+        return imageHolderV2.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

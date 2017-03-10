@@ -18,6 +18,9 @@ import com.vlk.multimager.utils.Image;
 import com.vlk.multimager.utils.Params;
 import com.vlk.multimager.utils.Utils;
 
+import net.yazeed44.imagepicker.model.ImageEntry;
+import net.yazeed44.imagepicker.util.Picker;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -102,14 +106,32 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
     }
+    */
 
     private void initiateMultiPicker() {
-        Intent intent = new Intent(this, GalleryActivity.class);
-        Params params = new Params();
-        params.setCaptureLimit(10);
-        params.setPickerLimit(10);
-        intent.putExtra(Constants.KEY_PARAMS, params);
-        startActivityForResult(intent, Constants.TYPE_MULTI_PICKER);
+        new Picker.Builder(this, new MyPickListener(), R.style.MIP_theme)
+                .build()
+                .startActivity();
+    }
+
+    private class MyPickListener implements Picker.PickListener {
+
+        @Override
+        public void onPickedSuccessfully(final ArrayList<ImageEntry> images) {
+            for(int i=0;i<images.size();i++){
+                System.out.println(images.get(i).path);
+            }
+            recyclerView.setHasFixedSize(true);
+            staggeredGridLayoutManager = new StaggeredGridLayoutManager(5,1);
+            recyclerView.setLayoutManager(staggeredGridLayoutManager);
+            mAdapter = new RecyclerList(getApplicationContext(), images);
+            recyclerView.setAdapter(mAdapter);
+        }
+
+        @Override
+        public void onCancel() {
+            //User canceled the pick activity
+        }
     }
 
     private void uploadImage(){
